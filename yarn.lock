@@ -1633,7 +1633,7 @@
   dependencies:
     "@prisma/debug" "5.22.0"
 
-"@prisma/sdk@~4.0.0":
+"@prisma/sdk@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@prisma/sdk/-/sdk-4.0.0.tgz#0f98709eaae2cf7454e5d5e6c5d1a1008357ee14"
   integrity sha512-CBwN0XcfEHaGI0clEWQys43xVMnELLtjdJUz6Lfqc6Hl/lgwZggwdru28cyIL4YyaK3Pbw1fwcFvPqL67wGEKA==

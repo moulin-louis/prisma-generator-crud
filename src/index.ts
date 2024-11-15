@@ -1,9 +1,10 @@
 // Importing package.json for automated synchronization of version numbers
 import { version } from '../package.json';
 import { generatorHandler } from '@prisma/generator-helper';
+import { logger } from '@prisma/sdk';
 import { configSchema, PrismaOptions } from './config';
 import { populateModelFile, generateBarrelFile } from './generator';
-import { Project } from 'ts-morph';
+import { Project, ts } from 'ts-morph';
 
 generatorHandler({
   onManifest() {
@@ -47,9 +48,14 @@ generatorHandler({
 
     generateBarrelFile(models, indexFile);
 
-    indexFile.formatText();
+    indexFile.formatText({
+      semicolons: ts.SemicolonPreference.Insert,
+      tabSize: 2,
+      convertTabsToSpaces: true,
+    });
 
     models.forEach((model) => {
+      logger.info(`generating schema for ${model.name}`);
       const sourceFile = project.createSourceFile(
         `${outputPath}/${model.name.toLowerCase()}.ts`,
         {},
@@ -60,7 +66,11 @@ generatorHandler({
 
       populateModelFile(model, sourceFile, config, prismaOptions);
 
-      sourceFile.formatText();
+      sourceFile.formatText({
+        semicolons: ts.SemicolonPreference.Insert,
+        tabSize: 2,
+        convertTabsToSpaces: true,
+      });
     });
 
     return project.save();

@@ -46,12 +46,7 @@ export const writeImportsForModel = (
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: './index',
         namedImports: Array.from(
-          new Set(
-            filteredFields.flatMap((f) => [
-              `Complete${f.type}`,
-              relatedModelName(f.type),
-            ])
-          )
+          new Set(filteredFields.flatMap((f) => [`Complete${f.type}`, relatedModelName(f.type)]))
         ),
       });
     }
@@ -131,9 +126,7 @@ export const generateRelatedSchemaForModel = (
             .inlineBlock(() => {
               relationFields.forEach((field) => {
                 writer
-                  .write(
-                    `${field.name}: ${getZodConstructor(field, relatedModelName)}`
-                  )
+                  .write(`${field.name}: ${getZodConstructor(field, relatedModelName)}`)
                   .write(',')
                   .newLine();
               });
@@ -157,10 +150,7 @@ export const populateModelFile = (
     generateRelatedSchemaForModel(model, sourceFile, config, prismaOptions);
 };
 
-export const generateBarrelFile = (
-  models: DMMF.Model[],
-  indexFile: SourceFile
-) => {
+export const generateBarrelFile = (models: DMMF.Model[], indexFile: SourceFile) => {
   models.forEach((model) =>
     indexFile.addExportDeclaration({
       moduleSpecifier: `./${model.name.toLowerCase()}`,
