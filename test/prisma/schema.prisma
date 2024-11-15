@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator custom_generator {
+  provider = "node ../../dist/index.js"
+  output   = "../types"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Feature {
+  id        Int        @id @default(autoincrement())
+  title     String
+  scenarios Scenario[]
+}
+
+model Scenario {
+  id          Int      @id @default(autoincrement())
+  title       String
+  browserType String
+  steps       Step[]
+  Feature     Feature? @relation(fields: [featureId], references: [id])
+  featureId   Int?
+}
+
+enum KeywordType {
+  GIVEN
+  WHEN
+  THEN
+  BUT
+}
+
+model Step {
+  id         Int          @id @default(autoincrement())
+  type       KeywordType?
+  definition String
+  url        String
+  exists     Boolean      @default(false)
+  elements   ElementHTML?
+  Scenario   Scenario?    @relation(fields: [scenarioId], references: [id])
+  scenarioId Int?
+}
+
+enum ElementType {
+  INPUT
+  BUTTON
+  DIV
+  LIST
+}
+
+model ElementHTML {
+  id          Int         @id @default(autoincrement())
+  type        ElementType
+  locator     Locator[]
+  data        String
+  dataInput   String? //present if type is Input
+  elementList String? //present if type is List
+  Step        Step        @relation(fields: [stepId], references: [id])
+  stepId      Int         @unique
+}
+
+enum LocatorType {
+  XPATH
+  ID
+  LABEL
+  CSS_SELECTOR
+}
+
+model Locator {
+  id            Int         @id @default(autoincrement())
+  type          String /// NOTE: string represent a variant of LocatorType 
+  data          String
+  ElementHTML   ElementHTML @relation(fields: [elementHTMLId], references: [id])
+  elementHTMLId Int
+}
+

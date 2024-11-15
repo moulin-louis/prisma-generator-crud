@@ -1,0 +1,16 @@
+{
+  "name": "usage",
+  "private": true,
+  "version": "1.0.0",
+  "main": "src/app.js",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "prisma": "latest",
+    "prisma-generator-crud": "1.0.0",
+    "typescript": "latest"
+  }
+}
