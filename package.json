@@ -74,7 +74,7 @@
     "generator"
   ],
   "lint-staged": {
-    "**/*.{ts}": [
+    "**/*.ts": [
       "prettier --write --ignore-unknown",
       "eslint --fix"
     ]
