@@ -56,7 +56,7 @@ generatorHandler({
     generateBarrelFile(models, indexFile);
 
     models.forEach((model) => {
-      logger.info(`generating schema for ${model.name}`);
+      //logger.info(`generating schema for ${model.name}`);
       //logger.info(`${model.name} fields: `);
       //model.fields.forEach((field) => {
       //  logger.info(`\t${field.name}: `, field);

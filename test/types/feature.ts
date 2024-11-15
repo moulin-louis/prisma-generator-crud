@@ -10,6 +10,11 @@ export const CreateFeature = z.object({
   title: z.string(),
 });
 
+export const CreateNestedFeature = z.object({
+  title: z.string(),
+  scenarios: Scenario.array(),
+});
+
 export interface CompleteFeature extends z.infer<typeof Feature> {
   scenarios: CompleteScenario[];
 }

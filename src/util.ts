@@ -19,12 +19,17 @@ export const useModelNames = ({ modelCase, relationModel }: Config) => {
   const formatCreateName = (name: string, prefix = '') => {
     return `${prefix}Create${name}`;
   };
+  const formatCreateNestedName = (name: string, prefix = '') => {
+    return `${prefix}CreateNested${name}`;
+  };
 
   return {
     modelName: (name: string) => formatModelName(name, relationModel === 'default' ? '_' : ''),
     relatedModelName: (name: string | DMMF.SchemaEnum | DMMF.OutputType | DMMF.SchemaArg) =>
       formatModelName(relationModel === 'default' ? name.toString() : `Related${name.toString()}`),
     createName: (name: string) => formatCreateName(name, relationModel === 'default' ? '_' : ''),
+    createNestedName: (name: string) =>
+      formatCreateNestedName(name, relationModel === 'default' ? '_' : ''),
   };
 };
 

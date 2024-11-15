@@ -18,6 +18,15 @@ export const CreateElementHTML = z.object({
   elementList: z.string().nullish(),
 });
 
+export const CreateNestedElementHTML = z.object({
+  type: z.nativeEnum(ElementType),
+  locator: Locator.array(),
+  data: z.string(),
+  dataInput: z.string().nullish(),
+  elementList: z.string().nullish(),
+  Step: Step,
+});
+
 export interface CompleteElementHTML extends z.infer<typeof ElementHTML> {
   locator: CompleteLocator[];
   Step: CompleteStep;

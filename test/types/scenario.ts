@@ -13,6 +13,13 @@ export const CreateScenario = z.object({
   browserType: z.string(),
 });
 
+export const CreateNestedScenario = z.object({
+  title: z.string(),
+  browserType: z.string(),
+  steps: Step.array(),
+  Feature: Feature.nullish(),
+});
+
 export interface CompleteScenario extends z.infer<typeof Scenario> {
   steps: CompleteStep[];
   Feature?: CompleteFeature | null;

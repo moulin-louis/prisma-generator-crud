@@ -23,6 +23,15 @@ export const CreateStep = z.object({
   exists: z.boolean(),
 });
 
+export const CreateNestedStep = z.object({
+  type: z.nativeEnum(KeywordType).nullish(),
+  definition: z.string(),
+  url: z.string(),
+  exists: z.boolean(),
+  elements: ElementHTML.nullish(),
+  Scenario: Scenario.nullish(),
+});
+
 export interface CompleteStep extends z.infer<typeof Step> {
   elements?: CompleteElementHTML | null;
   Scenario?: CompleteScenario | null;

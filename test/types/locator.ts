@@ -13,6 +13,12 @@ export const CreateLocator = z.object({
   data: z.string(),
 });
 
+export const CreateNestedLocator = z.object({
+  type: z.string(),
+  data: z.string(),
+  ElementHTML: ElementHTML,
+});
+
 export interface CompleteLocator extends z.infer<typeof Locator> {
   ElementHTML: CompleteElementHTML;
 }
