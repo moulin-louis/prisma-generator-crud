@@ -38,7 +38,7 @@
   "devDependencies": {
     "@eslint/js": "^9.15.0",
     "@prisma/client": "~5.22.0",
-    "@prisma/sdk": "~4.0.0",
+    "@prisma/sdk": "^4.0.0",
     "@types/fs-extra": "^11.0.4",
     "dts-cli": "^2.0.5",
     "eslint": "^9.15.0",
@@ -74,7 +74,7 @@
     "generator"
   ],
   "lint-staged": {
-    "**/*.{ts}": [
+    "**/*.ts": [
       "prettier --write --ignore-unknown",
       "eslint --fix"
     ]
