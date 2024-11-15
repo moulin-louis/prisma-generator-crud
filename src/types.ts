@@ -2,11 +2,12 @@ import type { DMMF } from '@prisma/generator-helper';
 
 export const getZodConstructor = (
   field: DMMF.Field,
-  getRelatedModelName = (name: string | DMMF.SchemaEnum | DMMF.OutputType | DMMF.SchemaArg) =>
-    name.toString()
+  getRelatedModelName = (
+    name: string | DMMF.SchemaEnum | DMMF.OutputType | DMMF.SchemaArg
+  ) => name.toString()
 ) => {
   let zodType = 'z.unknown()';
-  let extraModifiers: string[] = [''];
+  const extraModifiers: string[] = [''];
   if (field.kind === 'scalar') {
     switch (field.type) {
       case 'String':
@@ -46,7 +47,8 @@ export const getZodConstructor = (
   }
 
   if (field.isList) extraModifiers.push('array()');
-  if (!field.isRequired && field.type !== 'Json') extraModifiers.push('nullish()');
+  if (!field.isRequired && field.type !== 'Json')
+    extraModifiers.push('nullish()');
   // if (field.hasDefaultValue) extraModifiers.push('optional()')
 
   return `${zodType}${extraModifiers.join('.')}`;

@@ -1,4 +1,4 @@
-// @ts-ignore Importing package.json for automated synchronization of version numbers
+// Importing package.json for automated synchronization of version numbers
 import { version } from '../package.json';
 import { generatorHandler } from '@prisma/generator-helper';
 import { configSchema, PrismaOptions } from './config';
