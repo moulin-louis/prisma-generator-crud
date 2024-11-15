@@ -1,8 +1,8 @@
 import * as z from 'zod';
 import { ElementType } from '@prisma/client';
-import { CompleteLocator, RelatedLocator, CompleteStep, RelatedStep } from './index';
+import { CompleteLocator, RelatedLocatorSchema, CompleteStep, RelatedStepSchema } from './index';
 
-export const ElementHTML = z.object({
+export const ElementHTMLSchema = z.object({
   id: z.number().int(),
   type: z.nativeEnum(ElementType),
   data: z.string(),
@@ -11,14 +11,16 @@ export const ElementHTML = z.object({
   stepId: z.number().int(),
 });
 
-export const CreateElementHTML = z.object({
+export type ElementHTMLSchema = z.infer<typeof ElementHTMLSchema>;
+
+export const CreateElementHTMLSchema = z.object({
   type: z.nativeEnum(ElementType),
   data: z.string(),
   dataInput: z.string().nullish(),
   elementList: z.string().nullish(),
 });
 
-export const CreateNestedElementHTML = z.object({
+export const CreateNestedElementHTMLSchema = z.object({
   type: z.nativeEnum(ElementType),
   locator: Locator.array(),
   data: z.string(),
@@ -27,14 +29,14 @@ export const CreateNestedElementHTML = z.object({
   Step: Step,
 });
 
-export interface CompleteElementHTML extends z.infer<typeof ElementHTML> {
+export interface CompleteElementHTML extends z.infer<typeof ElementHTMLSchema> {
   locator: CompleteLocator[];
   Step: CompleteStep;
 }
 
-export const RelatedElementHTML: z.ZodSchema<CompleteElementHTML> = z.lazy(() =>
-  ElementHTML.extend({
-    locator: RelatedLocator.array(),
-    Step: RelatedStep,
+export const RelatedElementHTMLSchema: z.ZodSchema<CompleteElementHTML> = z.lazy(() =>
+  ElementHTMLSchema.extend({
+    locator: RelatedLocatorSchema.array(),
+    Step: RelatedStepSchema,
   })
 );

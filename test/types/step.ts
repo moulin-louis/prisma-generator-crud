@@ -2,12 +2,12 @@ import * as z from 'zod';
 import { KeywordType } from '@prisma/client';
 import {
   CompleteElementHTML,
-  RelatedElementHTML,
+  RelatedElementHTMLSchema,
   CompleteScenario,
-  RelatedScenario,
+  RelatedScenarioSchema,
 } from './index';
 
-export const Step = z.object({
+export const StepSchema = z.object({
   id: z.number().int(),
   type: z.nativeEnum(KeywordType).nullish(),
   definition: z.string(),
@@ -16,14 +16,16 @@ export const Step = z.object({
   scenarioId: z.number().int().nullish(),
 });
 
-export const CreateStep = z.object({
+export type StepSchema = z.infer<typeof StepSchema>;
+
+export const CreateStepSchema = z.object({
   type: z.nativeEnum(KeywordType).nullish(),
   definition: z.string(),
   url: z.string(),
   exists: z.boolean(),
 });
 
-export const CreateNestedStep = z.object({
+export const CreateNestedStepSchema = z.object({
   type: z.nativeEnum(KeywordType).nullish(),
   definition: z.string(),
   url: z.string(),
@@ -32,14 +34,14 @@ export const CreateNestedStep = z.object({
   Scenario: Scenario.nullish(),
 });
 
-export interface CompleteStep extends z.infer<typeof Step> {
+export interface CompleteStep extends z.infer<typeof StepSchema> {
   elements?: CompleteElementHTML | null;
   Scenario?: CompleteScenario | null;
 }
 
-export const RelatedStep: z.ZodSchema<CompleteStep> = z.lazy(() =>
-  Step.extend({
-    elements: RelatedElementHTML.nullish(),
-    Scenario: RelatedScenario.nullish(),
+export const RelatedStepSchema: z.ZodSchema<CompleteStep> = z.lazy(() =>
+  StepSchema.extend({
+    elements: RelatedElementHTMLSchema.nullish(),
+    Scenario: RelatedScenarioSchema.nullish(),
   })
 );

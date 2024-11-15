@@ -9,27 +9,26 @@ export const formatStyle: FormatCodeSettings = {
 };
 
 export const useModelNames = ({ modelCase, relationModel }: Config) => {
-  const formatModelName = (name: string, prefix = '') => {
+  const formatModelName = (name: string) => {
     if (modelCase === 'camelCase') {
       name = name.slice(0, 1).toLowerCase() + name.slice(1);
     }
-    return `${prefix}${name}`;
+    return `${name}Schema`;
   };
 
-  const formatCreateName = (name: string, prefix = '') => {
-    return `${prefix}Create${name}`;
+  const formatCreateName = (name: string) => {
+    return `Create${name}Schema`;
   };
-  const formatCreateNestedName = (name: string, prefix = '') => {
-    return `${prefix}CreateNested${name}`;
+  const formatCreateNestedName = (name: string) => {
+    return `CreateNested${name}Schema`;
   };
 
   return {
-    modelName: (name: string) => formatModelName(name, relationModel === 'default' ? '_' : ''),
+    modelName: (name: string) => formatModelName(name),
     relatedModelName: (name: string | DMMF.SchemaEnum | DMMF.OutputType | DMMF.SchemaArg) =>
       formatModelName(relationModel === 'default' ? name.toString() : `Related${name.toString()}`),
-    createName: (name: string) => formatCreateName(name, relationModel === 'default' ? '_' : ''),
-    createNestedName: (name: string) =>
-      formatCreateNestedName(name, relationModel === 'default' ? '_' : ''),
+    createName: (name: string) => formatCreateName(name),
+    createNestedName: (name: string) => formatCreateNestedName(name),
   };
 };
 
