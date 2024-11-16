@@ -1,7 +1,6 @@
 import * as z from "zod";
 import { ElementType } from "@prisma/client";
-import { CompleteLocator, RelatedLocatorSchema, CompleteStep, RelatedStepSchema } from "./index";
-import { CreateLocator, RelatedLocatorSchema, CreateStep, RelatedStepSchema } from "./index";
+import { CompleteLocator, RelatedLocatorSchema, CreateLocatorSchema, CompleteStep, RelatedStepSchema, CreateStepSchema } from "./index";
 
 export const ElementHTMLSchema = z.object({
     id: z.number().int(),
@@ -25,11 +24,11 @@ export type CreateElementHTML = z.infer<typeof CreateElementHTMLSchema>;
 
 export const CreateNestedElementHTMLSchema = z.object({
     type: z.nativeEnum(ElementType),
-    locator: CreateLocator.array(),
+    locator: CreateLocator.array()Schema,
     data: z.string(),
     dataInput: z.string().nullish(),
     elementList: z.string().nullish(),
-    Step: CreateStep,
+    Step: CreateStepSchema,
 });
 
 export interface CompleteElementHTML extends z.infer<typeof ElementHTMLSchema> {

@@ -1,6 +1,5 @@
 import * as z from "zod";
-import { CompleteScenario, RelatedScenarioSchema } from "./index";
-import { CreateScenario, RelatedScenarioSchema } from "./index";
+import { CompleteScenario, RelatedScenarioSchema, CreateScenarioSchema } from "./index";
 
 export const FeatureSchema = z.object({
     id: z.number().int(),
@@ -17,7 +16,7 @@ export type CreateFeature = z.infer<typeof CreateFeatureSchema>;
 
 export const CreateNestedFeatureSchema = z.object({
     title: z.string(),
-    scenarios: CreateScenario.array(),
+    scenarios: CreateScenario.array()Schema,
 });
 
 export interface CompleteFeature extends z.infer<typeof FeatureSchema> {

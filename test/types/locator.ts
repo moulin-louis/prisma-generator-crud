@@ -1,6 +1,5 @@
 import * as z from "zod";
-import { CompleteElementHTML, RelatedElementHTMLSchema } from "./index";
-import { CreateElementHTML, RelatedElementHTMLSchema } from "./index";
+import { CompleteElementHTML, RelatedElementHTMLSchema, CreateElementHTMLSchema } from "./index";
 
 export const LocatorSchema = z.object({
     id: z.number().int(),
@@ -21,7 +20,7 @@ export type CreateLocator = z.infer<typeof CreateLocatorSchema>;
 export const CreateNestedLocatorSchema = z.object({
     type: z.string(),
     data: z.string(),
-    ElementHTML: CreateElementHTML,
+    ElementHTML: CreateElementHTMLSchema,
 });
 
 export interface CompleteLocator extends z.infer<typeof LocatorSchema> {

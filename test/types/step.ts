@@ -1,7 +1,6 @@
 import * as z from "zod";
 import { KeywordType } from "@prisma/client";
-import { CompleteElementHTML, RelatedElementHTMLSchema, CompleteScenario, RelatedScenarioSchema } from "./index";
-import { CreateElementHTML, RelatedElementHTMLSchema, CreateScenario, RelatedScenarioSchema } from "./index";
+import { CompleteElementHTML, RelatedElementHTMLSchema, CreateElementHTMLSchema, CompleteScenario, RelatedScenarioSchema, CreateScenarioSchema } from "./index";
 
 export const StepSchema = z.object({
     id: z.number().int(),
@@ -28,8 +27,8 @@ export const CreateNestedStepSchema = z.object({
     definition: z.string(),
     url: z.string(),
     exists: z.boolean(),
-    elements: CreateElementHTML.nullish(),
-    Scenario: CreateScenario.nullish(),
+    elements: CreateElementHTML.nullish()Schema,
+    Scenario: CreateScenario.nullish()Schema,
 });
 
 export interface CompleteStep extends z.infer<typeof StepSchema> {
