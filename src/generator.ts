@@ -59,6 +59,15 @@ export const writeImportsForModel = (
           new Set(filteredFields.flatMap((f) => [`Complete${f.type}`, relatedModelName(f.type)]))
         ),
       });
+      importList.push({
+        kind: StructureKind.ImportDeclaration,
+        moduleSpecifier: './index',
+        namedImports: Array.from(
+          new Set(
+            filteredFields.flatMap((f) => [`Create${f.type}Schema`, relatedModelName(f.type)])
+          )
+        ),
+      });
     }
   }
 
@@ -100,10 +109,9 @@ export const generateSchemaForModel = (
       },
     ],
   });
-
   sourceFile.addTypeAlias({
     isExported: true,
-    name: `${modelName(model.name)}`,
+    name: `${model.name}`,
     type: `z.infer<typeof ${modelName(model.name)}>`,
   });
 
@@ -142,6 +150,11 @@ export const generateSchemaForModel = (
       },
     ],
   });
+  sourceFile.addTypeAlias({
+    isExported: true,
+    name: `Create${model.name}`,
+    type: `z.infer<typeof ${createName(model.name)}>`,
+  });
 
   /// NOTE: Generate Create Schema With Nested Struct
   sourceFile.addVariableStatement({
@@ -167,7 +180,9 @@ export const generateSchemaForModel = (
                 .filter((f) => !relationFieldsId.includes(f.name)) /// NOTE: relation fields
                 .forEach((field) => {
                   writer
-                    .write(`${field.name}: ${getZodConstructor(field)}`)
+                    .write(
+                      `${field.name}: ${field.kind === 'object' ? `Create${getZodConstructor(field)}Schema` : getZodConstructor(field)}`
+                    )
                     .write(',')
                     .newLine();
                 });
