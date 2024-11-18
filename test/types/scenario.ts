@@ -1,5 +1,5 @@
 import * as z from "zod";
-import { CompleteStep, RelatedStepSchema, CreateStepSchema, CompleteFeature, RelatedFeatureSchema, CreateFeatureSchema } from "./index";
+import { CreateStepSchema, CreateFeatureSchema } from "./index";
 
 export const ScenarioSchema = z.object({
     id: z.number().int(),
@@ -20,16 +20,7 @@ export type CreateScenario = z.infer<typeof CreateScenarioSchema>;
 export const CreateNestedScenarioSchema = z.object({
     title: z.string(),
     browserType: z.string(),
-    steps: CreateStep.array()Schema,
-    Feature: CreateFeature.nullish()Schema,
+    steps: CreateStepSchema.array(),
 });
 
-export interface CompleteScenario extends z.infer<typeof ScenarioSchema> {
-    steps: CompleteStep[];
-    Feature?: CompleteFeature | null;
-}
-
-export const RelatedScenarioSchema: z.ZodSchema<CompleteScenario> = z.lazy(() => ScenarioSchema.extend({
-    steps: RelatedStepSchema.array(),
-    Feature: RelatedFeatureSchema.nullish(),
-}));
+export type CreateNestedScenario = z.infer<typeof CreateNestedScenarioSchema>;

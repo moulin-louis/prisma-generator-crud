@@ -42,7 +42,7 @@ export const getZodConstructor = (
   } else if (field.kind === 'enum') {
     zodType = `z.nativeEnum(${field.type})`;
   } else if (field.kind === 'object') {
-    zodType = getRelatedModelName(field.type);
+    zodType = getRelatedModelName(field.type) + 'Schema';
   }
 
   if (field.isList) extraModifiers.push('array()');
